@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 import { Template } from 'meteor/templating';
 
 import { Tasks } from '../api/tasks';
@@ -6,12 +8,11 @@ import './task.html';
 
 Template.task.events({
   'click .toggle-checked'() {
-    //set checked to opposite of what it currently is
-    Tasks.update(this._id, {
-      $set: { checked: ! this.checked },
-    });
+    //call method to set checked to opposite of what it currently is
+    Meteor.call('tasks.setChecked', this._id, !this.checked);
   },
   'click .delete'() {
-    Tasks.remove(this._id);
+    //call method to remove task
+    Meteor.call('tasks.remove',this._id);
   },
 });
