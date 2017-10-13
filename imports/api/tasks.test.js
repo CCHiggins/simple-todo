@@ -61,13 +61,13 @@ if (Meteor.isServer){
           let taskId = Tasks.insert({
             text: 'another fun test',
             createdAt: new Date(),
-            owner: userId,
+            owner: otherUserId,
             username: 'fuckit',
             private: true
           });
 
           // set up call from the other user!
-          const invocation = { otherUserId };
+          const invocation = { userId };
 
           // run the method with `this` set to the fake invocation
           // assert that you should get an error
