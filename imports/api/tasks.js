@@ -39,10 +39,9 @@ Meteor.methods({
     //if the task is private and the user isn't the owner
     //then they aren't authorized to delete it!
     const task = Tasks.findOne(taskId);
-    if (task.private && task.owner !== Meteor.userId()){
-      throw new Meteor.Error('not authorized');
+    if (task.private && task.owner !== this.userId){
+          throw new Meteor.Error('not authorized');
     }
-
     Tasks.remove(taskId);
   },
   'tasks.setChecked'(taskId, setChecked){
@@ -52,7 +51,7 @@ Meteor.methods({
     //if the task is marked private then only the owner
     //can check that mother fucker off.
     const task = Tasks.findOne(taskId)
-    if (task.private && task.owner !== Meteor.userId()){
+    if (task.private && task.owner !== this.userId){
       throw new Meteor.Error('not authorized');
     }
     Tasks.update(taskId, { $set: { checked: setChecked } });
@@ -63,7 +62,7 @@ Meteor.methods({
 
     const task = Tasks.findOne(taskId);
 
-    if (task.owner !== Meteor.userId()) {
+    if (task.owner !== this.userId) {
       throw new Meteor.Error('not authorized');
     }
     Tasks.update(taskId, { $set: { private: setPrivate } });
